@@ -1,9 +1,20 @@
-function Signup() {
+import { useNavigate } from "react-router-dom"
+function Signup({ setIsLoggedIn }) {
+
+  const navigate = useNavigate()
+
+  const handleSignup = (e) => {
+    e.preventDefault()
+
+    setIsLoggedIn(true)
+
+    navigate("/")
+  }
   return (
     <div>
       <h1>Sign Up Page</h1>
 
-      <form>
+      <form onSubmit={handleSignup}>
         <input type="text" placeholder="Enter Name" />
         <br /><br />
 
@@ -13,7 +24,7 @@ function Signup() {
         <input type="password" placeholder="Create Password" />
         <br /><br />
 
-        <button>Sign Up</button>
+        <button type="submit">Sign Up</button>
       </form>
     </div>
   )
