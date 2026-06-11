@@ -12,8 +12,13 @@ import Contact from './pages/Contact'
 
 function App() {
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [username, setUsername] = useState("Ketana")
+  const [isLoggedIn, setIsLoggedIn] = useState(
+  localStorage.getItem("isLoggedIn") === "true"
+)
+
+const [username, setUsername] = useState(
+  localStorage.getItem("username") || ""
+)
 
   return (
     <BrowserRouter>
@@ -40,7 +45,15 @@ function App() {
 
     <button
       className="logout-btn"
-      onClick={() => setIsLoggedIn(false)}
+     onClick={() => {
+
+  setIsLoggedIn(false)
+  setUsername("")
+
+  localStorage.removeItem("username")
+  localStorage.removeItem("isLoggedIn")
+
+}}
     >
       Logout
     </button>
@@ -52,11 +65,21 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route
   path="/login"
-  element={<Login setIsLoggedIn={setIsLoggedIn} />}
+  element={
+    <Login
+      setIsLoggedIn={setIsLoggedIn}
+      setUsername={setUsername}
+    />
+  }
 />
-        <Route
+<Route
   path="/signup"
-  element={<Signup setIsLoggedIn={setIsLoggedIn} />}
+  element={
+    <Signup
+      setIsLoggedIn={setIsLoggedIn}
+      setUsername={setUsername}
+    />
+  }
 />
         <Route path="/flights" element={<FlightSearch />} />
         <Route path="/details" element={<FlightDetails />} />
